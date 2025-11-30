@@ -63,17 +63,40 @@ export default function SignIn() {
         }}
       >
         <Paper
-          elevation={3}
+          elevation={6}
           sx={{
-            padding: 4,
+            padding: { xs: 3, sm: 4 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
+            borderRadius: 2,
+            background: `linear-gradient(135deg, ${
+              theme.palette.background.paper
+            } 0%, ${
+              theme.palette.mode === "dark"
+                ? "rgba(25, 118, 210, 0.1)"
+                : "rgba(25, 118, 210, 0.05)"
+            } 100%)`,
           }}
         >
-          <Typography component="h1" variant="h4" gutterBottom>
+          <Typography
+            component="h1"
+            variant="h4"
+            gutterBottom
+            sx={{
+              fontWeight: 700,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              mb: 1,
+            }}
+          >
             Sign In
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Welcome back! Please sign in to continue
           </Typography>
           {error && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
@@ -96,6 +119,21 @@ export default function SignIn() {
               autoFocus
               value={formData.email}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  WebkitTextFillColor: theme.palette.text.primary,
+                },
+                "& input:-webkit-autofill:hover": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -108,26 +146,60 @@ export default function SignIn() {
               autoComplete="current-password"
               value={formData.password}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  WebkitTextFillColor: theme.palette.text.primary,
+                },
+                "& input:-webkit-autofill:hover": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                },
+              }}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                py: 1.5,
+                fontSize: "1rem",
+                fontWeight: 600,
+                textTransform: "none",
+                borderRadius: 2,
+                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+                "&:hover": {
+                  background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
+                  transform: "translateY(-2px)",
+                  boxShadow: 4,
+                },
+                transition: "all 0.3s ease",
+              }}
               disabled={loading}
             >
               {loading ? <CircularProgress size={24} /> : "Sign In"}
             </Button>
-            <Box textAlign="center">
-              <Link
-                to="/signup"
-                style={{
-                  color: theme.palette.primary.main,
-                  textDecoration: "none",
-                }}
-              >
-                Don't have an account? Sign Up
-              </Link>
+            <Box textAlign="center" sx={{ mt: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                Don't have an account?{" "}
+                <Link
+                  to="/signup"
+                  style={{
+                    color: theme.palette.primary.main,
+                    textDecoration: "none",
+                    fontWeight: 600,
+                  }}
+                >
+                  Sign Up
+                </Link>
+              </Typography>
             </Box>
           </Box>
         </Paper>

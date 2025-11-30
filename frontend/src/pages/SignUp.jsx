@@ -83,17 +83,40 @@ export default function SignUp() {
         }}
       >
         <Paper
-          elevation={3}
+          elevation={6}
           sx={{
-            padding: 4,
+            padding: { xs: 3, sm: 4 },
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
+            borderRadius: 2,
+            background: `linear-gradient(135deg, ${
+              theme.palette.background.paper
+            } 0%, ${
+              theme.palette.mode === "dark"
+                ? "rgba(25, 118, 210, 0.1)"
+                : "rgba(25, 118, 210, 0.05)"
+            } 100%)`,
           }}
         >
-          <Typography component="h1" variant="h4" gutterBottom>
+          <Typography
+            component="h1"
+            variant="h4"
+            gutterBottom
+            sx={{
+              fontWeight: 700,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              mb: 1,
+            }}
+          >
             Sign Up
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Create your account to get started
           </Typography>
           {error && (
             <Alert severity="error" sx={{ width: "100%", mt: 2 }}>
@@ -116,6 +139,21 @@ export default function SignUp() {
               autoFocus
               value={formData.name}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  WebkitTextFillColor: theme.palette.text.primary,
+                },
+                "& input:-webkit-autofill:hover": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -127,6 +165,21 @@ export default function SignUp() {
               autoComplete="email"
               value={formData.email}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  WebkitTextFillColor: theme.palette.text.primary,
+                },
+                "& input:-webkit-autofill:hover": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -139,6 +192,21 @@ export default function SignUp() {
               autoComplete="new-password"
               value={formData.password}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  WebkitTextFillColor: theme.palette.text.primary,
+                },
+                "& input:-webkit-autofill:hover": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -150,6 +218,21 @@ export default function SignUp() {
               id="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+                "& input:-webkit-autofill": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  WebkitTextFillColor: theme.palette.text.primary,
+                },
+                "& input:-webkit-autofill:hover": {
+                  WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.paper} inset`,
+                },
+              }}
             />
             <FormControlLabel
               control={
@@ -171,21 +254,40 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                py: 1.5,
+                fontSize: "1rem",
+                fontWeight: 600,
+                textTransform: "none",
+                borderRadius: 2,
+                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+                "&:hover": {
+                  background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
+                  transform: "translateY(-2px)",
+                  boxShadow: 4,
+                },
+                transition: "all 0.3s ease",
+              }}
               disabled={loading}
             >
               {loading ? <CircularProgress size={24} /> : "Sign Up"}
             </Button>
-            <Box textAlign="center">
-              <Link
-                to="/signin"
-                style={{
-                  color: theme.palette.primary.main,
-                  textDecoration: "none",
-                }}
-              >
-                Already have an account? Sign In
-              </Link>
+            <Box textAlign="center" sx={{ mt: 2 }}>
+              <Typography variant="body2" color="text.secondary">
+                Already have an account?{" "}
+                <Link
+                  to="/signin"
+                  style={{
+                    color: theme.palette.primary.main,
+                    textDecoration: "none",
+                    fontWeight: 600,
+                  }}
+                >
+                  Sign In
+                </Link>
+              </Typography>
             </Box>
           </Box>
         </Paper>

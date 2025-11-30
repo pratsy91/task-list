@@ -39,7 +39,7 @@ import axios from "axios";
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, signout } = useAuth();
-  const { mode, toggleTheme } = useTheme();
+  const { theme, mode, toggleTheme } = useTheme();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -149,9 +149,19 @@ export default function Dashboard() {
         flexDirection: "column",
       }}
     >
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{
+          background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+          boxShadow: 4,
+        }}
+      >
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, fontWeight: 700 }}
+          >
             Task Management
           </Typography>
           <IconButton color="inherit" onClick={toggleTheme}>
@@ -189,14 +199,46 @@ export default function Dashboard() {
           minHeight: 0,
         }}
       >
-        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-          <Typography variant="h4" component="h1">
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 4,
+            flexWrap: "wrap",
+            gap: 2,
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h1"
+            sx={{
+              fontWeight: 700,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             My Tasks
           </Typography>
           <Button
             variant="contained"
             startIcon={<AddIcon />}
             onClick={() => navigate("/task/new")}
+            sx={{
+              borderRadius: 2,
+              px: 3,
+              py: 1.5,
+              fontWeight: 600,
+              textTransform: "none",
+              boxShadow: 3,
+              "&:hover": {
+                transform: "translateY(-2px)",
+                boxShadow: 6,
+              },
+              transition: "all 0.3s ease",
+            }}
           >
             Add Task
           </Button>
@@ -213,7 +255,20 @@ export default function Dashboard() {
             <CircularProgress />
           </Box>
         ) : tasks.length === 0 ? (
-          <Paper sx={{ p: 4, textAlign: "center" }}>
+          <Paper
+            sx={{
+              p: 4,
+              textAlign: "center",
+              borderRadius: 2,
+              background: `linear-gradient(135deg, ${
+                theme.palette.background.paper
+              } 0%, ${
+                theme.palette.mode === "dark"
+                  ? "rgba(25, 118, 210, 0.1)"
+                  : "rgba(25, 118, 210, 0.05)"
+              } 100%)`,
+            }}
+          >
             <Typography variant="h6" color="text.secondary">
               No tasks found. Create your first task!
             </Typography>
@@ -229,7 +284,17 @@ export default function Dashboard() {
           >
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               {tasks.map((task) => (
-                <Card key={task._id}>
+                <Card
+                  key={task._id}
+                  sx={{
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-4px)",
+                      boxShadow: 6,
+                    },
+                    borderRadius: 2,
+                  }}
+                >
                   <CardContent>
                     <Box
                       sx={{
@@ -247,11 +312,18 @@ export default function Dashboard() {
                             mb: 1,
                           }}
                         >
-                          <Typography variant="h6" component="h2">
+                          <Typography
+                            variant="h6"
+                            component="h2"
+                            sx={{ fontWeight: 600 }}
+                          >
                             {task.title}
                           </Typography>
                           <Chip
-                            label={task.status}
+                            label={
+                              task.status.charAt(0).toUpperCase() +
+                              task.status.slice(1)
+                            }
                             color={
                               task.status === "completed"
                                 ? "success"
@@ -261,7 +333,15 @@ export default function Dashboard() {
                             onClick={() =>
                               handleStatusChange(task._id, task.status)
                             }
-                            sx={{ cursor: "pointer" }}
+                            sx={{
+                              cursor: "pointer",
+                              fontWeight: 600,
+                              textTransform: "capitalize",
+                              "&:hover": {
+                                transform: "scale(1.05)",
+                              },
+                              transition: "transform 0.2s ease",
+                            }}
                           />
                         </Box>
                         {task.description && (

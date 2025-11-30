@@ -29,7 +29,7 @@ import axios from "axios";
 export default function TaskForm() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { mode, toggleTheme } = useTheme();
+  const { theme, mode, toggleTheme } = useTheme();
   const isEditMode = !!id;
 
   const [formData, setFormData] = useState({
@@ -112,17 +112,39 @@ export default function TaskForm() {
 
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{
+          background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+          boxShadow: 4,
+        }}
+      >
         <Toolbar>
           <IconButton
             edge="start"
             color="inherit"
             onClick={() => navigate("/dashboard")}
-            sx={{ mr: 2 }}
+            sx={{
+              mr: 2,
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              },
+            }}
           >
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              fontWeight: 700,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             {isEditMode ? "Edit Task" : "Create New Task"}
           </Typography>
           <IconButton color="inherit" onClick={toggleTheme}>
@@ -133,9 +155,17 @@ export default function TaskForm() {
 
       <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
         <Paper
-          elevation={3}
+          elevation={6}
           sx={{
-            padding: 4,
+            padding: { xs: 3, sm: 4 },
+            borderRadius: 2,
+            background: `linear-gradient(135deg, ${
+              theme.palette.background.paper
+            } 0%, ${
+              theme.palette.mode === "dark"
+                ? "rgba(25, 118, 210, 0.1)"
+                : "rgba(25, 118, 210, 0.05)"
+            } 100%)`,
           }}
         >
           {error && (
@@ -155,6 +185,14 @@ export default function TaskForm() {
               autoFocus
               value={formData.title}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+              }}
             />
             <TextField
               margin="normal"
@@ -166,6 +204,14 @@ export default function TaskForm() {
               rows={4}
               value={formData.description}
               onChange={handleChange}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: 2,
+                  "&:hover fieldset": {
+                    borderColor: theme.palette.primary.main,
+                  },
+                },
+              }}
             />
             <FormControl fullWidth margin="normal">
               <InputLabel id="status-label">Status</InputLabel>
@@ -181,11 +227,23 @@ export default function TaskForm() {
                 <MenuItem value="completed">Completed</MenuItem>
               </Select>
             </FormControl>
-            <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
+            <Box sx={{ display: "flex", gap: 2, mt: 4 }}>
               <Button
                 variant="outlined"
                 onClick={() => navigate("/dashboard")}
                 fullWidth
+                sx={{
+                  py: 1.5,
+                  borderRadius: 2,
+                  fontWeight: 600,
+                  textTransform: "none",
+                  borderWidth: 2,
+                  "&:hover": {
+                    borderWidth: 2,
+                    transform: "translateY(-2px)",
+                  },
+                  transition: "all 0.3s ease",
+                }}
               >
                 Cancel
               </Button>
@@ -194,6 +252,20 @@ export default function TaskForm() {
                 variant="contained"
                 fullWidth
                 disabled={loading}
+                sx={{
+                  py: 1.5,
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  textTransform: "none",
+                  borderRadius: 2,
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+                  "&:hover": {
+                    background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
+                    transform: "translateY(-2px)",
+                    boxShadow: 4,
+                  },
+                  transition: "all 0.3s ease",
+                }}
               >
                 {loading ? (
                   <CircularProgress size={24} />
