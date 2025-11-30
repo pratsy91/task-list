@@ -55,7 +55,9 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "Sign up failed",
+        message: error.response?.data?.message
+          ? `${error.response.data.message} Please try again.`
+          : "Sign up failed. Please try again.",
       };
     }
   };
@@ -77,7 +79,9 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "Sign in failed",
+        message: error.response?.data?.message
+          ? `${error.response.data.message} Please try again.`
+          : "Sign in failed. Please try again.",
       };
     }
   };

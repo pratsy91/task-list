@@ -57,7 +57,11 @@ export default function TaskForm() {
         status: response.data.status,
       });
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch task");
+      setError(
+        err.response?.data?.message
+          ? `${err.response.data.message} Please try again.`
+          : "Failed to fetch task. Please try again."
+      );
     } finally {
       setFetching(false);
     }
@@ -89,7 +93,11 @@ export default function TaskForm() {
       }
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to save task");
+      setError(
+        err.response?.data?.message
+          ? `${err.response.data.message} Please try again.`
+          : "Failed to save task. Please try again."
+      );
     } finally {
       setLoading(false);
     }

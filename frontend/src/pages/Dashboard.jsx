@@ -58,7 +58,11 @@ export default function Dashboard() {
       setTotalPages(response.data.totalPages);
       setError("");
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to fetch tasks");
+      setError(
+        err.response?.data?.message
+          ? `${err.response.data.message} Please try again.`
+          : "Failed to fetch tasks. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -96,7 +100,11 @@ export default function Dashboard() {
       setDeleteDialogOpen(false);
       setTaskToDelete(null);
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to delete task");
+      alert(
+        err.response?.data?.message
+          ? `${err.response.data.message} Please try again.`
+          : "Failed to delete task. Please try again."
+      );
       setDeleteDialogOpen(false);
       setTaskToDelete(null);
     }
@@ -113,7 +121,11 @@ export default function Dashboard() {
       await axios.put(`/tasks/${taskId}`, { status: newStatus });
       fetchTasks(currentPage);
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to update task status");
+      alert(
+        err.response?.data?.message
+          ? `${err.response.data.message} Please try again.`
+          : "Failed to update task status. Please try again."
+      );
     }
   };
 
