@@ -51,6 +51,17 @@ export default function SignUp() {
       return;
     }
 
+    // Validate email format (general validation)
+    if (
+      !formData.email.includes("@") ||
+      !formData.email.includes(".") ||
+      formData.email.indexOf("@") === 0 ||
+      formData.email.indexOf("@") === formData.email.length - 1
+    ) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
     if (formData.password.length < 6) {
       setError("Password must be at least 6 characters");
       return;
@@ -167,6 +178,7 @@ export default function SignUp() {
               id="email"
               label="Email Address"
               name="email"
+              type="email"
               autoComplete="email"
               value={formData.email}
               onChange={handleChange}
